@@ -1389,7 +1389,7 @@ class APIHandler:
                 yield {"event": "end"}
             
             except PermissionError:
-                yield {
+                yield { 
                     "event": "error",
                     # Do not expose the error message to the client since
                     # the message may contain sensitive information.
