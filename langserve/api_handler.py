@@ -1144,6 +1144,17 @@ class APIHandler:
                         "event": "data",
                     }
                 yield {"event": "end"}
+            except PermissionError:
+                yield {
+                    "event": "error",
+                    # Do not expose the error message to the client since
+                    # the message may contain sensitive information.
+                    # We'll add client side errors for validation as well.
+                    "data": json.dumps(
+                        {"status_code": 429, "message": "Limit reached"}
+                    ),
+                }
+                raise
             except BaseException:
                 yield {
                     "event": "error",
@@ -1256,6 +1267,17 @@ class APIHandler:
                         )
                         has_sent_metadata = True
                 yield {"event": "end"}
+            except PermissionError:
+                yield {
+                    "event": "error",
+                    # Do not expose the error message to the client since
+                    # the message may contain sensitive information.
+                    # We'll add client side errors for validation as well.
+                    "data": json.dumps(
+                        {"status_code": 429, "message": "Limit reached"}
+                    ),
+                }
+                raise
             except BaseException:
                 yield {
                     "event": "error",
@@ -1365,6 +1387,18 @@ class APIHandler:
                         )
                         has_sent_metadata = True
                 yield {"event": "end"}
+            
+            except PermissionError:
+                yield {
+                    "event": "error",
+                    # Do not expose the error message to the client since
+                    # the message may contain sensitive information.
+                    # We'll add client side errors for validation as well.
+                    "data": json.dumps(
+                        {"status_code": 429, "message": "Limit reached"}
+                    ),
+                }
+                raise
             except BaseException:
                 yield {
                     "event": "error",
